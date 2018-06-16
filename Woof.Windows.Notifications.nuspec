@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>1.0.0</version>
+    <title>$title$</title>
+    <authors>Adam Łyskawa, Kamil Marzec</authors>
+    <owners>Adam Łyskawa, Kamil Marzec</owners>
+    <licenseUrl>https://en.wikipedia.org/wiki/MIT_License</licenseUrl>
+    <projectUrl>https://github.com/HTD/Woof.Windows.Notifications</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Nice WPF equivalent of Toast Notifications.</description>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>(c)2018 by CodeDog Ltd.</copyright>
+    <tags>code codedog dotnet windows system</tags>
+  </metadata>
+</package>

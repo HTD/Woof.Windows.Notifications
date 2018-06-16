@@ -1,0 +1,121 @@
+﻿<Window
+  x:Class="Woof.WindowsEx.Notifications.NotificationWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  Name="Me"
+  Width="475"
+  Height="100"
+  AllowsTransparency="False"
+  FontFamily="Segoe WP"
+  FontWeight="Light"
+  SnapsToDevicePixels="True"
+  UseLayoutRounding="True"
+  WindowStartupLocation="Manual">
+  <Window.Resources>
+    <Color x:Key="PresetDark">#262626</Color>
+    <Color x:Key="PresetRed">#c00000</Color>
+    <Color x:Key="PresetGreen">#005522</Color>
+    <Color x:Key="PresetBlue">#0095D9</Color>
+    <Color x:Key="PresetYellow">#cc7700</Color>
+    <SolidColorBrush x:Key="BG" Color="{StaticResource PresetDark}" />
+    <SolidColorBrush x:Key="FG" Color="#f1f1f1" />
+    <SolidColorBrush x:Key="BGError" Color="{StaticResource PresetRed}" />
+    <SolidColorBrush x:Key="BGMessage" Color="{StaticResource PresetDark}" />
+    <SolidColorBrush x:Key="BGSuccess" Color="{StaticResource PresetGreen}" />
+    <SolidColorBrush x:Key="BGWarning" Color="{StaticResource PresetYellow}" />
+    <Style x:Key="Frame" TargetType="Border">
+      <Setter Property="Background" Value="{StaticResource BGMessage}" />
+      <Setter Property="BorderBrush" Value="#888" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="Padding" Value="5" />
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding Context, ElementName=Me}" Value="Error">
+          <Setter Property="Background" Value="{StaticResource BGError}" />
+        </DataTrigger>
+        <DataTrigger Binding="{Binding Context, ElementName=Me}" Value="Message">
+          <Setter Property="Background" Value="{StaticResource BGMessage}" />
+        </DataTrigger>
+        <DataTrigger Binding="{Binding Context, ElementName=Me}" Value="Success">
+          <Setter Property="Background" Value="{StaticResource BGSuccess}" />
+        </DataTrigger>
+        <DataTrigger Binding="{Binding Context, ElementName=Me}" Value="Warning">
+          <Setter Property="Background" Value="{StaticResource BGWarning}" />
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>
+    <Style x:Key="Logo" TargetType="Image">
+      <Setter Property="Width" Value="64" />
+      <Setter Property="Height" Value="64" />
+      <Setter Property="Opacity" Value="0.75" />
+    </Style>
+    <Style x:Key="Text" TargetType="StackPanel">
+      <Setter Property="Margin" Value="5,0" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <Style x:Key="Label" TargetType="Label">
+      <Setter Property="Foreground" Value="{StaticResource FG}" />
+    </Style>
+    <Style
+      x:Key="Header"
+      BasedOn="{StaticResource Label}"
+      TargetType="Label">
+      <Setter Property="FontSize" Value="25px" />
+      <Setter Property="Opacity" Value="0.5" />
+      <Setter Property="FontWeight" Value="Normal" />
+      <Setter Property="Margin" Value="0,0,0,-10" />
+    </Style>
+    <Style
+      x:Key="Message"
+      BasedOn="{StaticResource Label}"
+      TargetType="Label">
+      <Setter Property="FontSize" Value="15px" />
+    </Style>
+    <Style x:Key="Dismiss" TargetType="Button">
+      <Setter Property="FontSize" Value="24px" />
+      <Setter Property="FontWeight" Value="Normal" />
+      <Setter Property="Background" Value="{StaticResource FG}" />
+      <Setter Property="Foreground" Value="{StaticResource BG}" />
+      <Setter Property="Opacity" Value="0.1" />
+      <Setter Property="Padding" Value="36,0" />
+      <Setter Property="HorizontalAlignment" Value="Right" />
+      <Setter Property="VerticalAlignment" Value="Stretch" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+      <Setter Property="BorderBrush" Value="{x:Null}" />
+    </Style>
+  </Window.Resources>
+  <Window.Style>
+    <Style TargetType="Window">
+      <Setter Property="Background" Value="{StaticResource BG}" />
+      <Setter Property="Foreground" Value="{StaticResource FG}" />
+      <Setter Property="WindowStyle" Value="None" />
+      <Setter Property="AllowsTransparency" Value="False" />
+      <Setter Property="ShowInTaskbar" Value="False" />
+      <Setter Property="ResizeMode" Value="NoResize" />
+    </Style>
+  </Window.Style>
+  <Border Style="{StaticResource Frame}">
+    <Grid>
+      <StackPanel Orientation="Horizontal">
+        <Image
+          Name="Logo"
+          Style="{StaticResource Logo}"
+          Visibility="Visible" />
+        <StackPanel Orientation="Vertical" Style="{StaticResource Text}">
+          <Label
+            Name="Header"
+            Content="{Binding HeaderText, ElementName=Me, FallbackValue=HeaderText}"
+            Style="{StaticResource Header}" />
+          <Label
+            Name="Message"
+            Content="{Binding MessageText, ElementName=Me, FallbackValue=MessageText}"
+            Style="{StaticResource Message}" />
+        </StackPanel>
+      </StackPanel>
+      <Button
+        Name="Dismiss"
+        Content="OK"
+        Style="{StaticResource Dismiss}"
+        Visibility="Visible" />
+    </Grid>
+  </Border>
+</Window>
