@@ -121,22 +121,24 @@ namespace Woof.WindowsEx.Notifications {
             get {
                 var vd = new System.Drawing.Rectangle(int.MaxValue, int.MaxValue, int.MinValue, int.MinValue);
                 foreach (var screen in Screen.AllScreens) vd = System.Drawing.Rectangle.Union(vd, screen.WorkingArea);
-                return new Point(vd.Right - Width - Space.X, vd.Bottom - Height - Space.Y);
+                var p2px = PresentationSource.FromVisual(this).CompositionTarget.TransformToDevice;
+                var size = p2px.Transform(new Point(Width, Height));
+                return new Point(vd.Right - size.X - Space.X, vd.Bottom - size.Y - Space.Y);
             }
         }
 
         Point PositionOffscreen {
             get {
                 var p = PositionRightBottom;
-                //return new Point(p.X, p.Y + Height + (Screen.PrimaryScreen.Bounds.Height - Screen.PrimaryScreen.WorkingArea.Height));
                 return new Point(p.X + Width, p.Y);
             }
         }
 
         ManualResetEventSlim Slide(Point here, Point target, double time) {
             var duration = new Duration(TimeSpan.FromMilliseconds(time));
-            var xAnimation = new DoubleAnimation(here.X, target.X, duration);
-            var yAnimation = new DoubleAnimation(here.Y, target.Y, duration);
+            var px2p = PresentationSource.FromVisual(this).CompositionTarget.TransformFromDevice;
+            var xAnimation = new DoubleAnimation(px2p.Transform(here).X, px2p.Transform(target).X, duration);
+            var yAnimation = new DoubleAnimation(px2p.Transform(here).Y, px2p.Transform(target).Y, duration);
             var done = new ManualResetEventSlim(false);
             xAnimation.Completed += (s, e) => done.Set();
             BeginAnimation(LeftProperty, xAnimation);
