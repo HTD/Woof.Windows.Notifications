@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Woof.Windows.Notifications", "Woof.Windows.Notifications.csproj", "{7EDB8FF7-BB15-4ED0-8917-4ED692FDDA40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{B029C66C-DC0E-4DE5-B785-DC9BCA6B518E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Woof.Windows.Notifications.Tests", "Tests\Woof.Windows.Notifications.Tests.csproj", "{B029C66C-DC0E-4DE5-B785-DC9BCA6B518E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
