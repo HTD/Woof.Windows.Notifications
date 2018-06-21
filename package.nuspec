@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <!--*-->
+    <id>Woof.Windows.Notifications</id>
+    <!--*-->
+    <version>1.0.2</version>
+    <title>Woof.Windows.Notifications</title>
+    <!--*-->
+    <authors>Adam Łyskawa</authors>
+    <owners>CodeDog Ltd.</owners>
+    <licenseUrl>https://en.wikipedia.org/wiki/MIT_License</licenseUrl>
+    <projectUrl>https://github.com/HTD/Woof.Windows.Notifications</projectUrl>
+    <!--<iconUrl></iconUrl>-->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <!--*-->
+    <description>Nice WPF equivalent of Toast Notifications. Works in any windows application type, including console.</description>
+    <!--*-->
+    <releaseNotes>XML documentation completed.</releaseNotes>
+    <copyright>(c)2018 by CodeDog Ltd.</copyright>
+    <tags>code codedog dotnet windows system notifications toast</tags>
+    <dependencies>
+    </dependencies>
+  </metadata>
+</package>

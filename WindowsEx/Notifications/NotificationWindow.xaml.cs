@@ -13,6 +13,9 @@ namespace Woof.WindowsEx.Notifications {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1405:ComVisibleTypeBaseTypesShouldBeComVisible")]
     public sealed partial class NotificationWindow : Window, IDisposable {
 
+        /// <summary>
+        /// Creates new notification window.
+        /// </summary>
         public NotificationWindow() {
             InitializeComponent();
             Loaded += async (s, e) => {
@@ -87,18 +90,27 @@ namespace Woof.WindowsEx.Notifications {
 
         #region Properties registration
 
+        /// <summary>
+        /// Context dependency property.
+        /// </summary>
         public static readonly DependencyProperty ContextProperty = DependencyProperty.Register(
             "Context",
             typeof(Notification.Contexts),
             typeof(NotificationWindow)
         );
 
+        /// <summary>
+        /// HeaderText dependency property.
+        /// </summary>
         public static readonly DependencyProperty HeaderTextProperty = DependencyProperty.Register(
             "HeaderText",
             typeof(string),
             typeof(NotificationWindow)
         );
 
+        /// <summary>
+        /// MessageText dependency property.
+        /// </summary>
         public static readonly DependencyProperty MessageTextProperty = DependencyProperty.Register(
             "MessageText",
             typeof(string),
@@ -160,6 +172,9 @@ namespace Woof.WindowsEx.Notifications {
             ResetEvent.Set();
         }
 
+        /// <summary>
+        /// Disposes the internal reset event.
+        /// </summary>
         public void Dispose() => ((IDisposable)ResetEvent).Dispose();
 
     }

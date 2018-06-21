@@ -16,7 +16,24 @@ namespace Woof.WindowsEx.Notifications {
         /// <summary>
         /// Available context of the notification.
         /// </summary>
-        public enum Contexts { Error, Message, Success, Warning }
+        public enum Contexts {
+            /// <summary>
+            /// Red style. For notifications about errors.
+            /// </summary>
+            Error,
+            /// <summary>
+            /// Gray style. For regular notifications.
+            /// </summary>
+            Message,
+            /// <summary>
+            /// Green style. For notifications about successfull completion of an operation.
+            /// </summary>
+            Success,
+            /// <summary>
+            /// Yelow style. For notifications about unexpected events.
+            /// </summary>
+            Warning
+        }
 
         /// <summary>
         /// Common header to show with notifications.
@@ -52,8 +69,8 @@ namespace Woof.WindowsEx.Notifications {
         /// Displays notification in synchronous application context, the main thread is unblocked when the window is dismissed.
         /// <para>MUST BE CALLED FROM STA THREAD!</para>
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="message"></param>
+        /// <param name="context">Context of notification, one of Error, Message, Success or Warning.</param>
+        /// <param name="message">Message to display.</param>
         public void Notify(Contexts context, string message) {
             var app = new Application() { ShutdownMode = ShutdownMode.OnExplicitShutdown };
             app.Startup += async (s, e) => {
@@ -67,10 +84,9 @@ namespace Woof.WindowsEx.Notifications {
         /// Displays notification in asynchronous context, the task completes as the window is dismissed.
         /// <para>MUST BE CALLED FROM STA THREAD!</para>
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
-
+        /// <param name="context">Context of notification, one of Error, Message, Success or Warning.</param>
+        /// <param name="message">Message to display.</param>
+        /// <returns>Task.</returns>
         public async Task NotifyAsync(Contexts context, string message) {
             StartNotify(context, message);
             await Task.Run(() => ResetEvent.Wait());
@@ -82,20 +98,43 @@ namespace Woof.WindowsEx.Notifications {
         /// <summary>
         /// Displays notification in asynchronous context, the task is not awaided.
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="message"></param>
+        /// <param name="context">Context of notification, one of Error, Message, Success or Warning.</param>
+        /// <param name="message">Message to display.</param>
         public void NotifyAndForget(Contexts context, string message) => NotifyAsync(context, message);
 
 #pragma warning restore CS4014
 
         #region Static methods
 
+        /// <summary>
+        /// Configures a static <see cref="Notification"/> instance.
+        /// </summary>
+        /// <param name="header">Header text.</param>
+        /// <param name="logo">Optional logo icon to display. Provide path relative to project root, the file should be linked as resource.</param>
         public static void Configure(string header, string logo = null) => _Instance = new Notification(header, logo);
 
+        /// <summary>
+        /// Displays notification in synchronous application context, the main thread is unblocked when the window is dismissed.
+        /// <para>MUST BE CALLED FROM STA THREAD!</para>
+        /// </summary>
+        /// <param name="context">Context of notification, one of Error, Message, Success or Warning.</param>
+        /// <param name="message">Message to display.</param>
         public static void Show(Contexts context, string message) => _Instance?.Notify(context, message);
 
+        /// <summary>
+        /// Displays notification in asynchronous context, the task completes as the window is dismissed.
+        /// <para>MUST BE CALLED FROM STA THREAD!</para>
+        /// </summary>
+        /// <param name="context">Context of notification, one of Error, Message, Success or Warning.</param>
+        /// <param name="message">Message to display.</param>
+        /// <returns></returns>
         public static async Task ShowAsync(Contexts context, string message) => await _Instance?.NotifyAsync(context, message);
 
+        /// <summary>
+        /// Displays notification in asynchronous context, the task is not awaided.
+        /// </summary>
+        /// <param name="context">Context of notification, one of Error, Message, Success or Warning.</param>
+        /// <param name="message">Message to display.</param>
         public static void ShowAndForget(Contexts context, string message) => _Instance?.NotifyAndForget(context, message);
 
         #endregion
@@ -127,6 +166,9 @@ namespace Woof.WindowsEx.Notifications {
             SystemSounds.Asterisk.Play();
         }
 
+        /// <summary>
+        /// Disposes a reset event used internally.
+        /// </summary>
         public void Dispose() => ResetEvent?.Dispose();
 
         ManualResetEventSlim ResetEvent;
